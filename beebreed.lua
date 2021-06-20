@@ -26,16 +26,23 @@ end
 local function getAnalyzerSide()
     for i = 0, 5, 1 do
         local name = transposer.getInventoryName(i)
-        if name == "tile.for.core" then
-            return i
-        end
+        if name == "tile.for.core" then return {num = i,bool = "no"}
+        elseif name == "tile.labMachine" then return {num = i,bool = "yes"} end
     end
     return nil
 end
 
 local chest_inv = getChestSide()
 local apiary_inv = getApiarySide()
-local analyzer_inv = getAnalyzerSide()
+local analyzer_data = getAnalyzerSide()
+local analyzer_inv
+local isBinnie
+if analyzer_data then
+	analyzer_inv = analyzer_data.num
+	isBinnie = analyzer_data.bool
+end
+
+local analyzerSlots = {no={inMin=3,inMax=8,outMin=9,outMax=12},yes={inMin=1,inMax=6,outMin=8,outMax=13}}
 
 local beebreed = {}
 
@@ -65,7 +72,7 @@ local function getBeeSlot(side, rangemin, rangemax)
         return princessSlot or droneSlot
     end
 end
-local function moveItemToSlotRange(inSide, inSlot, outSide, outMin, outMax)
+local function moveItemToSlotRange(inSide, inSlot, outSide, outMin, outMax) --todo improve performance
     local oMin = outMin or 1
     local oMax = outMax or transposer.getInventorySize(outSide)
     for i = oMin, oMax, 1 do
@@ -131,8 +138,7 @@ function beebreed.mainLoop(mutation, values)
             end
             while beeSlot do
                 if analyzer_inv then
-                    print(analyzer_inv)
-                    moveItemToSlotRange(apiary_inv, getBeeSlot(apiary_inv, 3, 9), analyzer_inv, 3, 8)
+                    moveItemToSlotRange(apiary_inv, getBeeSlot(apiary_inv, 3, 9), analyzer_inv, analyzerSlots[isBinnie].inMin, analyzerSlots[isBinnie].inMax)
                 else
                     os.sleep(5)
                 end
@@ -141,15 +147,26 @@ function beebreed.mainLoop(mutation, values)
             if analyzer_inv then
                 local hasBee = getBeeSlot(analyzer_inv)
                 while hasBee do
-                    local tankLevel = transposer.getTankLevel(analyzer_inv)
-                    if tankLevel < 100 then
-                        print("honey levels critical. refuel.")
-                        while tankLevel < 100 do
-                            os.sleep(5) -- gets stuck here if apiary broken (even if replaced)
-                            tankLevel = transposer.getTankLevel(analyzer_inv)
-                        end
-                    end
-                    local outBee = getBeeSlot(analyzer_inv, 9, 12)
+					if not isBinnie then
+						local tankLevel = transposer.getTankLevel(analyzer_inv)
+						if tankLevel < 100 then
+							print("honey levels critical. refuel.")
+							while tankLevel < 100 do
+								os.sleep(5) -- gets stuck here if apiary broken (even if replaced)
+								tankLevel = transposer.getTankLevel(analyzer_inv)
+							end
+						end
+                    else
+						local dyeLevel = transposer.getSlotStackSize(analyzer_inv,14)
+						if dyeLevel == 0 then
+							print ("dye levels critical. refuel.")
+							while dyeLevel == 0 do
+								os.sleep(5)
+								dyeLevel = transposer.getSlotStackSize(analyzer_inv,14)
+							end
+						end
+					end
+                    local outBee = getBeeSlot(analyzer_inv, analyzerSlots[isBinnie].outMin, analyzerSlots[isBinnie].outMax)
                     if outBee then
                         local outBeeName = transposer.getStackInSlot(analyzer_inv, outBee).name
                         if outBeeName == "Forestry:beeDroneGE" then
