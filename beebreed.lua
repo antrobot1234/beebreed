@@ -3,17 +3,26 @@ local fs = require("filesystem")
 local genetics = require("genetics")
 
 local transposer = component.transposer
-local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")())
+local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary"))
 
 
-local chest_inv = 2
-local apiary_inv = 3
+local chest_inv = getChestSide()
+local apiary_inv = getApiarySide()
 
 
 local beebreed = {}
 
 local max_wait_time = 240
-
+local function getChestSide()
+   for i=1,6,1 do
+        name = transposer.getInventoryName(i)
+        if name == "tile.chest" or name == "tile.for.apicultureChest" then return i end
+end
+local function getApiarySide()
+    for i=1,6,1 do
+        name = transposer.getInventoryName(i)
+        if name == "tile.for.apiculture" or name == "tile.for.alveary" or name=="tile.magicApiary" then return i end
+end
 local function compareDrones(princess, mutation, values)
     local best_bee = -1
     local best_bee_score = -1
