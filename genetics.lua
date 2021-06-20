@@ -74,6 +74,14 @@ function genetics.pairMutationScore(princess, drone, mutation)
 end
 
 function genetics.individualTotalScore(princess, drone, mutation, values)
+    if not princess.isAnalyzed then
+        print("Princess not analyzed")
+        return nil
+    end
+    if not drone.isAnalyzed then
+        print("A drone not analyzed")
+        return nil
+    end
     local mut = genetics.pairMutationScore(princess, drone, mutation)
     local trait = genetics.traitScore(drone, values)
     return mut + trait
