@@ -18,6 +18,7 @@ end
 local function areAllelesEqual(a, b)
     for k, v in pairs(a.territory) do
         if b.territory[k] ~= v then return false end
+    end
     for k, v in pairs(a) do
         if b[k] ~= v then
                 if v ~= a.territory then return false end
