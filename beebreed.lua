@@ -62,7 +62,7 @@ end
 local sameStreak = 0
 
 function beebreed.mainLoop(mutation, values)
-    first = true
+    local first = true
     while true do
         local queen = apiary.getQueen()
         if queen == nil or first then
