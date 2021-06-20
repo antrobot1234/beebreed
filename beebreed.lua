@@ -66,8 +66,11 @@ function beebreed.mainLoop(mutation, values)
     while true do
         local queen = apiary.getQueen()
         if queen == nil or first then
-            first = false
-            print("Queen or princess not found. Waiting...")
+            if first then
+               first = false
+            else
+               print("Queen or princess not found. Waiting...")
+            end
             for i = 1, max_wait_time do
                 os.sleep(1)
                 queen = apiary.getQueen()
