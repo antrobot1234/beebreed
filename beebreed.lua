@@ -3,7 +3,7 @@ local fs = require("filesystem")
 local genetics = require("genetics")
 
 local transposer = component.transposer
-local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary"))
+local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
 
 local function getChestSide()
    for i=1,6,1 do
