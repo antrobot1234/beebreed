@@ -21,6 +21,7 @@ local config = {
         transmuting = 1.0
     },
     flowers = {
+        rocks = 2.0,
         flowers = 1.0,
         ["end"] = -2.0
     }
