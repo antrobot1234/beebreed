@@ -3,11 +3,23 @@ local fs = require("filesystem")
 local genetics = require("genetics")
 
 local transposer = component.transposer
-local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")())
+local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
 
+local function getChestSide()
+   for i=0,5,1 do
+        name = transposer.getInventoryName(i)
+        if name == "tile.chest" or name == "tile.for.apicultureChest" then return i end
+   end
+end
+local function getApiarySide()
+    for i=0,5,1 do
+        name = transposer.getInventoryName(i)
+        if name == "tile.for.apiculture" or name == "tile.for.alveary" or name=="tile.magicApiary" then return i end
+    end
+end
 
-local chest_inv = 2
-local apiary_inv = 3
+local chest_inv = getChestSide()
+local apiary_inv = getApiarySide()
 
 
 local beebreed = {}
@@ -61,18 +73,11 @@ function beebreed.mainLoop(mutation, values)
             print("Cycle completed. Searching for the best drone...")
             local best, score, genome = compareDrones(queen, mutation, values)
             transposer.transferItem(chest_inv, apiary_inv, 1, best)
-            print("Best drone found with a score of " .. tostring(score) .. ". A new cycle begins.")
-
             if genetics.areGenesEqual(genome, queen) then
-                sameStreak = sameStreak + 1
-            else
-                sameStreak = 0
+               print("the dust has settled. enjoy your new queen!")
+               break
             end
-
-            if sameStreak > 2 then
-                print("Stabilized.")
-            end
-
+            print("Best drone found with a score of " .. tostring(score) .. ". A new cycle begins.")
             print("")
         end
     end
