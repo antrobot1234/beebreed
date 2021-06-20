@@ -3,7 +3,7 @@ local fs = require("filesystem")
 local component = require("component")
 local term = require("term")
 
-local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")())
+local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
 
 local function getInput()
     term.write("> ")
