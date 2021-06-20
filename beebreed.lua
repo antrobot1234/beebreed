@@ -45,6 +45,7 @@ local function compareDrones(princess, mutation, values)
                if score == nil then
                   print("press any key to continue...")
                   ev.pull("key_down")
+                  score = genetics.individualTotalScore(princess, bee, mutation, values)
                end
             end
             if score > best_bee_score then
