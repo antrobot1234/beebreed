@@ -70,18 +70,11 @@ function beebreed.mainLoop(mutation, values)
             print("Cycle completed. Searching for the best drone...")
             local best, score, genome = compareDrones(queen, mutation, values)
             transposer.transferItem(chest_inv, apiary_inv, 1, best)
-            print("Best drone found with a score of " .. tostring(score) .. ". A new cycle begins.")
-
             if genetics.areGenesEqual(genome, queen) then
-                sameStreak = sameStreak + 1
-            else
-                sameStreak = 0
+               print("the dust has settled. enjoy your new queen!")
+               break
             end
-
-            if sameStreak > 2 then
-                print("Stabilized.")
-            end
-
+            print("Best drone found with a score of " .. tostring(score) .. ". A new cycle begins.")
             print("")
         end
     end
