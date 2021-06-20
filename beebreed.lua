@@ -7,13 +7,13 @@ local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or
 
 local function getChestSide()
    for i=0,5,1 do
-        name = transposer.getInventoryName(i)
+        local name = transposer.getInventoryName(i)
         if name == "tile.chest" or name == "tile.for.apicultureChest" then return i end
    end
 end
 local function getApiarySide()
     for i=0,5,1 do
-        name = transposer.getInventoryName(i)
+        local name = transposer.getInventoryName(i)
         if name == "tile.for.apiculture" or name == "tile.for.alveary" or name=="tile.magicApiary" then return i end
     end
 end
