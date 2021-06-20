@@ -1,6 +1,7 @@
 local component = require("component")
 local fs = require("filesystem")
 local genetics = require("genetics")
+local ev = require("event")
 
 local transposer = component.transposer
 local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
@@ -43,7 +44,7 @@ local function compareDrones(princess, mutation, values)
                score = genetics.individualTotalScore(princess, bee, mutation, values)
                if score == nil then
                   print("press any key to continue...")
-                  os.pullEvent("key")
+                  ev.pull("key_down")
                end
             end
             if score > best_bee_score then
