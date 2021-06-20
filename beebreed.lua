@@ -17,11 +17,13 @@ local function getChestSide()
    for i=1,6,1 do
         name = transposer.getInventoryName(i)
         if name == "tile.chest" or name == "tile.for.apicultureChest" then return i end
+   end
 end
 local function getApiarySide()
     for i=1,6,1 do
         name = transposer.getInventoryName(i)
         if name == "tile.for.apiculture" or name == "tile.for.alveary" or name=="tile.magicApiary" then return i end
+    end
 end
 local function compareDrones(princess, mutation, values)
     local best_bee = -1
