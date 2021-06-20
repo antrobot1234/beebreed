@@ -56,7 +56,6 @@ local sameStreak = 0
 function beebreed.mainLoop(mutation, values)
     first = true
     while true do
-        os.sleep(5)
         local queen = apiary.getQueen()
         if queen == nil or first then
             first = false
@@ -82,6 +81,7 @@ function beebreed.mainLoop(mutation, values)
             print("Best drone found with a score of " .. tostring(score) .. ". A new cycle begins.")
             print("")
         end
+        os.sleep(5)
     end
 end
 
