@@ -2,6 +2,8 @@ local beebreed = require("beebreed")
 local fs = require("filesystem")
 local component = require("component")
 local term = require("term")
+local config = require("config")
+
 
 local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
 
@@ -95,32 +97,4 @@ local mutation = {
     chance = selected.chance / 100.0
 }
 
-local traitValues = {
-    speed = 2.0,
-    fert = 1.5,
-    cave = 1.0,
-    rain = 1.0,
-    night = 1.5,
-    flowering = 0.5,
-    total = 0.001,
-    effect = {
-        none = 0.0,
-        aggressive = -1.0,
-        ends = -2.0,
-        poison = -1.0,
-        beatific = 1.0,
-        heroic = 1.5,
-        recharging = 1.5,
-        ravening = -1.0,
-        empowering = 2.5,
-        magnification = 2.0,
-        purifying = 2.5,
-        transmuting = 1.0
-    },
-    flowers = {
-        flowers = 1.0,
-        ["end"] = -2.0
-    }
-}
-
-beebreed.mainLoop(mutation, traitValues)
+beebreed.mainLoop(mutation, config)
