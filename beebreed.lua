@@ -38,8 +38,14 @@ local function compareDrones(princess, mutation, values)
         local bee = drone.individual
 
         if bee ~= nil then
-            local score
-            score = genetics.individualTotalScore(princess, bee, mutation, values)
+            local score = nil
+            while score == nil do
+               score = genetics.individualTotalScore(princess, bee, mutation, values)
+               if score == nil then
+                  print("press any key to continue...")
+                  os.pullEvent("key")
+               end
+            end
             if score > best_bee_score then
                 best_bee_score = score
                 best_bee = i
