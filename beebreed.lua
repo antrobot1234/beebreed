@@ -62,11 +62,11 @@ end
 local sameStreak = 0
 
 function beebreed.mainLoop(mutation, values)
-    local first = true
+    first = true --for some reason, setting this to local doesn't play nice
     while true do
         local queen = apiary.getQueen()
         if queen == nil or first then
-            local first = false
+            first = false
             print("Queen or princess not found. Waiting...")
             for i = 1, max_wait_time do
                 os.sleep(1)
