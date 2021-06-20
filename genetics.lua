@@ -26,7 +26,7 @@ end
 
 function genetics.areGenesEqual(a, b)
     if a == nil or b == nil then return false end
-    return areAllelesEqual(a.active, b.active) and areAllelesEqual(a.inactive, b.inactive)
+    return areAllelesEqual(a.active, b.active) and areAllelesEqual(a.inactive, b.inactive) and areAllelesEqual(a.active,b.inactive) and areAllelesEqual(a.inactive,b.active)
 end
 
 function genetics.traitScore(individual, values)
