@@ -71,7 +71,7 @@ local function getBeeSlot(side, rangemin, rangemax)
     if princessSlot and droneSlot then
         return math.min(princessSlot, droneSlot)
     else
-        return princessSlot or droneSlot
+        return princessSlot or droneSlot or -1
     end
 end
 local function moveItemToSlotRange(inSide, inSlot, outSide, outMin, outMax) --todo improve performance
