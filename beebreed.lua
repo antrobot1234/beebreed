@@ -55,7 +55,7 @@ local function findItemName(side, iname, rangemin, rangemax)
     for i = rmin, rmax, 1 do
         if transposer.getSlotStackSize(side, i) ~= 0 then
             stack = cont.getStackInSlot(side, i)
-	    if not stack then return nil
+	    if not stack then return nil end
             local name = stack.name
             if name == iname then
                 return i
