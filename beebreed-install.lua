@@ -3,7 +3,7 @@ if not http then
   return
 end
 
-local branch = "main"
+local branch = "computercraft"
 
 local files = {
   {
