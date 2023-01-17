@@ -8,23 +8,23 @@ local branch = "main"
 local files = {
   {
     name = "openbee-install",
-    url = "https://github.com/antrobot1234/beebreed/"..branch.."/beebreed-install.lua"
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed-install.lua"
   },
   {
     name = "breeder",
-    url = "https://github.com/antrobot1234/beebreed/"..branch.."/beebreed.lua"
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed.lua"
   },
   {
     name = "runner",
-    url = "https://github.com/antrobot1234/beebreed/"..branch.."/beerunner.lua"
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beerunner.lua"
   },
   {
     name = "config",
-    url = "https://github.com/antrobot1234/beebreed/"..branch.."/config.lua"
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/config.lua"
   },
   {
 	name = "genetics",
-	url = "https://github.com/antrobot1234/beebreed/"..branch.."/genetics"
+	url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/genetics"
   }
 }
 
