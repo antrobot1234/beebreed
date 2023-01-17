@@ -1,21 +1,21 @@
 local genetics = {}
 
-local function pairMatchesMutation(genome, mate, mutation)
-    return (genome.species:lower() == mutation[1] and mate.species:lower() == mutation[2]) or (mate.species:lower() == mutation[1] and genome.species:lower() == mutation[2])
+local function pairMatchesMutation(genome, mate, mutation) --returns whether a pair matches the desired mutation. not neccessary due to eligibilityScore
+    return (genome.species.name:lower() == mutation[1] and mate.species.name:lower() == mutation[2]) or (mate.species.name:lower() == mutation[1] and genome.species.name:lower() == mutation[2])
 end
 
-local function speciesScore(individual, desired)
+local function speciesScore(individual, desired) --also not neccessary. integrated into eligibilityScore
     local score = 0
-    if individual.active.species:lower() == desired then
+    if individual.active.species.name:lower() == desired then
         score = score + 0.5
     end
-    if individual.inactive.species:lower() == desired then
+    if individual.inactive.species.name:lower() == desired then
         score = score + 0.5
     end
     return score
 end
 
-local function areAllelesEqual(a, b)
+local function areAllelesEqual(a, b) --compares whether two alleles are equal
     for k, v in pairs(a.territory) do
         if b.territory[k] ~= v then return false end
     end
@@ -27,12 +27,12 @@ local function areAllelesEqual(a, b)
     return true
 end
 
-function genetics.areGenesEqual(a, b)
+function genetics.areGenesEqual(a, b) --returns whether or not two individuals have identical genes
     if a == nil or b == nil then return false end
     return areAllelesEqual(a.active, b.active) and areAllelesEqual(a.inactive, b.inactive) and areAllelesEqual(a.active,b.inactive) and areAllelesEqual(a.inactive,b.active)
 end
 
-function genetics.traitScore(individual, values)
+function genetics.traitScore(individual, values) --ranks an individual based off of specific traits.
     local speed = values.speed * ((individual.active.speed + individual.inactive.speed) / 2)
     local fertility = values.fert * (-1 + (individual.active.fertility + individual.inactive.fertility) / 2)
 
@@ -56,7 +56,7 @@ function genetics.traitScore(individual, values)
     return (speed + fertility + caveDwelling + tolerant + nocturnal + flowering + effect + flowers) * values.total
 end
 
-function genetics.mutationScore(individual, mate, mutation)
+function genetics.mutationScore(individual, mate, mutation) --returns a score based off how likely a pair will be able to mutate with eachother
     local score = 0
     local mutationChance = 0
     -- breaks with dominant alleles, since they always appear as active when paired with a recessive allele
@@ -92,6 +92,33 @@ end
 
 function genetics._getOfAlleles(s1, s2)
     return {active = {species = s1}, inactive = {species = s2}}
+end
+
+function eligibilityScore(individual,mutation) --ranks a princess/drone based off of how eligible they are for breeding a species. a 0 score bee is completel ineligible for breeding and should be ignored.
+
+	name1 = individual.active.species.name:lower()
+	name2 = individual.inactive.species.name:lower()
+	score = 0
+	for i, v in ipairs(mutation) do
+		if string.find(v, name1) then score = score + 0.5 end
+		if string.find(v, name2) then score = score + 0.5 end
+	end
+	--bees with the desired mutation species are especially valuable.
+	if string.find(mutation.result, name1) then score = score + 2 end
+	if string.find(mutation.result, name2) then score = score + 2 end
+	return score
+end
+
+function genetics.getEligible(inventory,mutation) --creates a list of eligble drones and princesses for the specific process
+	local outTable = {drones = {},princesses = {}}
+	for i, item in pairs(inventory.getAllStacks()) do
+		local score = eligibilityScore(item.single("individual"),mutation)
+		if score > 0 then
+			if item.basic().name == "beeDroneGE" then outTable.drones[i] = item.single("individual") 
+			else outTable.princesses[i] = item.single("individual") end
+		end
+	end
+	return outTable
 end
 
 return genetics
