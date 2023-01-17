@@ -21,7 +21,7 @@ local files = {
   {
     name = "config",
     url = "https://github.com/antrobot1234/beebreed/"..branch.."/config.lua"
-  }
+  },
   {
 	name = "genetics",
 	url = "https://github.com/antrobot1234/beebreed/"..branch.."/genetics"
