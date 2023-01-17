@@ -3,7 +3,7 @@ if not http then
   return
 end
 
-local branch = "master"
+local branch = "main"
 
 local files = {
   {
