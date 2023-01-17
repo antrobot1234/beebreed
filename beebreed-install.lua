@@ -11,11 +11,11 @@ local files = {
     url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed-install.lua"
   },
   {
-    name = "breeder",
+    name = "beebreed",
     url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed.lua"
   },
   {
-    name = "runner",
+    name = "beerunner",
     url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beerunner.lua"
   },
   {
