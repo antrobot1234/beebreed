@@ -16,9 +16,12 @@ local function speciesScore(individual, desired)
 end
 
 local function areAllelesEqual(a, b)
+    for k, v in pairs(a.territory) do
+        if b.territory[k] ~= v then return false end
+    end
     for k, v in pairs(a) do
         if b[k] ~= v then
-            return false
+                if v ~= a.territory then return false end
         end
     end
     return true
@@ -26,7 +29,7 @@ end
 
 function genetics.areGenesEqual(a, b)
     if a == nil or b == nil then return false end
-    return areAllelesEqual(a.active, b.active) and areAllelesEqual(a.inactive, b.inactive)
+    return areAllelesEqual(a.active, b.active) and areAllelesEqual(a.inactive, b.inactive) and areAllelesEqual(a.active,b.inactive) and areAllelesEqual(a.inactive,b.active)
 end
 
 function genetics.traitScore(individual, values)
@@ -74,6 +77,14 @@ function genetics.pairMutationScore(princess, drone, mutation)
 end
 
 function genetics.individualTotalScore(princess, drone, mutation, values)
+    if not princess.isAnalyzed then
+        print("Princess not analyzed")
+        return nil
+    end
+    if not drone.isAnalyzed then
+        print("A drone not analyzed")
+        return nil
+    end
     local mut = genetics.pairMutationScore(princess, drone, mutation)
     local trait = genetics.traitScore(drone, values)
     return mut + trait
