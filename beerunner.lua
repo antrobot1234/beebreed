@@ -1,11 +1,5 @@
-local beebreed = require("beebreed")
-local fs = require("filesystem")
-local component = require("component")
-local term = require("term")
-local config = require("config")
 
-
-local apiary = component.proxy(component.list("tile_for_apiculture_0_name")() or component.list("for_alveary_0")() or component.list("magicBees_magicapiary")())
+local apiary = peripheral.find("tile_for_apiculture_0_name") or peripheral.find("for_alveary_0") or peripheral.find("magicBees_magicapiary") --component does not exist in CC. use peripherals
 
 local function getInput()
     term.write("> ")
@@ -18,8 +12,8 @@ local function printMutation(mutation)
     print("Chance: " .. tostring(mutation.chance))
 
     local special = mutation.specialConditions
-    for i = 1, special.n do
-        print("Extra: " .. special[i])
+    for k, v in pairs(special) do
+        print("Extra: " .. v[i])
     end
 end
 
@@ -40,8 +34,7 @@ local function getTargetMutation()
         print("What bee would you like to breed?")
         result = getInput()
         local possible = apiary.getBeeParents(result)
-    
-        if possible.n ~= 0 then
+        if next(possible) ~= nil then
             mutations = possible
         else
             print("There is no mutation that results in this bee.")
@@ -50,17 +43,15 @@ local function getTargetMutation()
         end
     end
     
-    print("")
-    
     local selected = nil
     while selected == nil and not skipMutation do
-        for i = 1, mutations.n do
-            printMutation(mutations[i])
-            print("(" .. tostring(i) .. "/" .. tostring(mutations.n) .. ")")
+        for k,v in pairs(mutations) do
+            printMutation(v)
+            print("(" .. tostring(i).. ")")
             print("")
             print("Is this the mutation you want? (y/n)")
             if getConfirmation() then
-                selected = mutations[i]
+                selected = v
                 break
             end
         end
@@ -87,6 +78,7 @@ local function getTargetMutation()
     return selected, result
 end
 
+-- script runs here
 local selected, result = getTargetMutation()
 
 print("")
@@ -96,5 +88,6 @@ local mutation = {
     result = result:lower(),
     chance = selected.chance / 100.0
 }
-
+beebreed = dofile("CCbreed.lua")
+config = dofile("CCBeeConfig.lua")
 beebreed.mainLoop(mutation, config)
