@@ -24,7 +24,9 @@ local config = {
         rocks = 2.0,
         flowers = 1.0,
         ["end"] = -2.0
-    }
+    },
+	apiaryDir = "south",
+	analyzerDir = "north"
 }
 
 return config
