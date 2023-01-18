@@ -88,6 +88,6 @@ local mutation = {
     result = result:lower(),
     chance = selected.chance / 100.0
 }
-beebreed = dofile("CCBreed.lua")
-config = dofile("CCBeeConfig.lua")
+beebreed = dofile("CCBreed")
+config = dofile("CCBeeConfig")
 beebreed.mainLoop(mutation, config)
