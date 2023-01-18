@@ -170,8 +170,8 @@ while true do
 	print("selecting best pair")
 	droneI,princessI,score,droneGenome,princessGenome = getBestPair(mutation,config)
 	print("pair ["..tostring(droneI)..","..tostring(princessI).."] found with score "..tostring(score))
-	beechest.pushItem(config.apiaryDir,princessI)
-	beechest.pushItem(config.apiaryDir,droneI)
+	beechest.pushItem(config.apiaryDir,princessI,1)
+	beechest.pushItem(config.apiaryDir,droneI,1)
 	--step 4: breed the bees and wait
 	
 	while(apiary.breedingProgress() ~= 100) do end
