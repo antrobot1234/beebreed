@@ -7,20 +7,20 @@ local branch = "computercraft"
 
 local files = {
   {
-    name = "openbee-install",
+    name = "beebreed-install",
     url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed-install.lua"
   },
   {
-    name = "beebreed",
-    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beebreed.lua"
+    name = "CCBee",
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/CCBee.lua"
   },
   {
-    name = "beerunner",
-    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/beerunner.lua"
+    name = "CCBreed",
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/CCBreed.lua"
   },
   {
-    name = "config",
-    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/config.lua"
+    name = "CCBeeConfig",
+    url = "https://raw.github.com/antrobot1234/beebreed/"..branch.."/CCBeeConfig.lua"
   },
   {
 	name = "genetics",
