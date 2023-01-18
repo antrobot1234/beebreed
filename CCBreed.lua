@@ -9,7 +9,7 @@ local beebreed = {}
 
 local max_wait_time = 240
 
-genetics = dofile("genetics.lua")
+genetics = dofile("genetics")
 
 local function findItemName(inventory, iname, rangemin, rangemax) --redefined and refined
     local rmax = rangemax or inventory.getInventorySize()
